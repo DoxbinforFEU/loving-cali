@@ -175,6 +175,94 @@ button:focus-visible {
   display: inline-block;
 }
 
+/* ---------- Audio toggle (music player) ---------- */
+.audio-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: inherit;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.audio-toggle:hover,
+.audio-toggle:focus-visible {
+  color: var(--accent-active);
+}
+.site-nav--solid .audio-toggle {
+  color: var(--text-muted);
+}
+.site-nav--solid .audio-toggle:hover,
+.site-nav--solid .audio-toggle:focus-visible {
+  color: var(--accent-active);
+}
+
+.audio-toggle__bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2.5px;
+  width: 14px;
+  height: 12px;
+  flex-shrink: 0;
+}
+.audio-toggle__bars span {
+  display: block;
+  width: 2px;
+  height: 4px;
+  background: currentColor;
+  border-radius: 1px;
+  transform-origin: bottom;
+}
+
+/* static "paused" glyph: a small triangle play-mark instead of flat bars */
+.audio-toggle:not(.is-playing) .audio-toggle__bars {
+  position: relative;
+}
+.audio-toggle:not(.is-playing) .audio-toggle__bars span { opacity: 0; }
+.audio-toggle:not(.is-playing) .audio-toggle__bars::before {
+  content: "";
+  position: absolute;
+  left: 1px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-style: solid;
+  border-width: 5px 0 5px 8px;
+  border-color: transparent transparent transparent currentColor;
+}
+
+/* playing: animated equalizer bars */
+.audio-toggle.is-playing .audio-toggle__bars span {
+  animation: audio-bar 0.9s ease-in-out infinite;
+}
+.audio-toggle.is-playing .audio-toggle__bars span:nth-child(1) { animation-delay: -0.6s; }
+.audio-toggle.is-playing .audio-toggle__bars span:nth-child(2) { animation-delay: -0.3s; }
+.audio-toggle.is-playing .audio-toggle__bars span:nth-child(3) { animation-delay: 0s; }
+
+/* muted (playing but silent, waiting on the unmute gesture): show static
+   bars at half height rather than the paused triangle or the animated
+   playing state, as a quiet "tap for sound" cue */
+.audio-toggle[aria-pressed="true"]:not(.is-playing) .audio-toggle__bars::before {
+  content: none;
+}
+.audio-toggle[aria-pressed="true"]:not(.is-playing) .audio-toggle__bars span {
+  opacity: 0.55;
+  height: 7px;
+}
+
+@keyframes audio-bar {
+  0%, 100% { height: 4px; }
+  50% { height: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audio-toggle.is-playing .audio-toggle__bars span {
+    animation: none;
+    height: 9px;
+  }
+}
+
 /* once scrolled past the hero, drop the blend trick for a quiet, legible bar */
 .site-nav--solid {
   mix-blend-mode: normal;
@@ -678,6 +766,8 @@ button:focus-visible {
 @media (max-width: 480px) {
   .hero__range { font-size: clamp(56px, 17vw, 120px); }
   .archive-card__number { font-size: clamp(36px, 12vw, 56px); }
+  .audio-toggle__label { display: none; }
+  .audio-toggle { gap: 0; padding: 6px; }
 }
 
 /* =========================================================================
