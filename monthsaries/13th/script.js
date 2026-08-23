@@ -221,35 +221,23 @@
     initPlayer();
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
-  }
-
   // =========================================================
   // Music player
   // =========================================================
   //
-  // No audio files were supplied with this project, so the player is wired
-  // to local relative paths under an "audio/" folder that doesn't exist
-  // yet. Drop your own MP3s in an "audio" folder next to this file and
-  // update the PLAYLIST array below (title, artist, src) to match. Nothing
-  // here calls out to an external/CDN audio source.
   const PLAYLIST = [
-    { title: "— add your track title —", artist: "Mikhail × Cali", src: "audio/track-01.mp3" },
-    { title: "— add your track title —", artist: "Mikhail × Cali", src: "audio/track-02.mp3" },
-    { title: "— add your track title —", artist: "Mikhail × Cali", src: "audio/track-03.mp3" },
+    { title: "13th Monthsary", artist: "Mikhail × Cali", src: "music.mp3" },
   ];
 
   function initPlayer() {
     const player = document.getElementById("player");
     if (!player) return;
 
-    const toggle = document.getElementById("playerToggle");
     const panel = document.getElementById("playerPanel");
+    const discBtn = document.getElementById("discBtn");
+    const expandBtn = document.getElementById("expandBtn");
     const toggleTrack = document.getElementById("playerToggleTrack");
-    const audio = document.getElementById("audioEl");
+    const audio = document.getElementById("bg-music");
     const playBtn = document.getElementById("playBtn");
     const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
@@ -262,10 +250,6 @@
     const nowArtist = document.getElementById("nowArtist");
     const playlistEl = document.getElementById("playlist");
 
-    const iconPlay = playBtn.querySelector(".icon-play");
-    const iconPause = playBtn.querySelector(".icon-pause");
-    const iconVol = muteBtn.querySelector(".icon-vol");
-    const iconMute = muteBtn.querySelector(".icon-mute");
 
     let currentIndex = 0;
     let isSeeking = false;
@@ -324,9 +308,17 @@
 
     function setPlayingState(playing) {
       player.dataset.playing = playing ? "true" : "false";
-      iconPlay.hidden = playing;
-      iconPause.hidden = !playing;
+
       playBtn.setAttribute("aria-label", playing ? "Pause" : "Play");
+      playBtn.setAttribute("aria-pressed", String(playing));
+      discBtn.setAttribute("aria-label", playing ? "Pause" : "Play");
+      discBtn.setAttribute("aria-pressed", String(playing));
+    }
+
+    function syncMuteState() {
+      player.dataset.muted = audio.muted ? "true" : "false";
+      muteBtn.setAttribute("aria-label", audio.muted ? "Unmute" : "Mute");
+      muteBtn.setAttribute("aria-pressed", String(audio.muted));
     }
 
     function togglePlay() {
@@ -343,7 +335,7 @@
       const expanded = player.dataset.state === "expanded";
       const next = !expanded;
       player.dataset.state = next ? "expanded" : "collapsed";
-      toggle.setAttribute("aria-expanded", String(next));
+      expandBtn.setAttribute("aria-expanded", String(next));
 
       if (motionReady) {
         if (next) {
@@ -364,7 +356,11 @@
     }
 
     // ---- events ----
-    toggle.addEventListener("click", expandPanel);
+    // The mini disc is the ONLY thing that toggles playback from the
+    // collapsed bar. The rest of the bar (track name + chevron) only
+    // expands/collapses the panel — it must never interrupt playback.
+    discBtn.addEventListener("click", togglePlay);
+    expandBtn.addEventListener("click", expandPanel);
     playBtn.addEventListener("click", togglePlay);
     prevBtn.addEventListener("click", () => loadTrack(currentIndex - 1, true));
     nextBtn.addEventListener("click", () => loadTrack(currentIndex + 1, true));
@@ -372,6 +368,7 @@
     audio.addEventListener("play", () => setPlayingState(true));
     audio.addEventListener("pause", () => setPlayingState(false));
     audio.addEventListener("ended", () => loadTrack(currentIndex + 1, true));
+    audio.addEventListener("error", () => setPlayingState(false));
 
     audio.addEventListener("loadedmetadata", () => {
       timeTotal.textContent = formatTime(audio.duration);
@@ -396,17 +393,25 @@
     volume.addEventListener("input", () => {
       audio.volume = Number(volume.value);
       audio.muted = audio.volume === 0;
-      iconVol.hidden = audio.muted;
-      iconMute.hidden = !audio.muted;
+      syncMuteState();
     });
 
     muteBtn.addEventListener("click", () => {
       audio.muted = !audio.muted;
-      iconVol.hidden = audio.muted;
-      iconMute.hidden = !audio.muted;
+      syncMuteState();
     });
 
     audio.volume = Number(volume.value);
+    syncMuteState();
     loadTrack(0, false);
+  }
+
+  // ---------- kick everything off ----------
+  // (must run after PLAYLIST/initPlayer are defined above, since `const`
+  // declarations aren't hoisted the way function declarations are)
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
   }
 })();

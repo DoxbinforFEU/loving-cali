@@ -473,24 +473,43 @@ main{
 .player__toggle{
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
   width: 100%;
-  padding: 0.6rem 0.9rem 0.6rem 0.6rem;
+  padding: 0.5rem 0.7rem 0.5rem 0.5rem;
   background: var(--surface-glass);
   border: 1px solid var(--border-subtle);
   border-radius: 999px;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   color: var(--text-primary);
-  cursor: pointer;
-  text-align: left;
   transition: border-color 300ms ease, background 300ms ease, box-shadow 300ms ease;
 }
 
 .player__toggle:hover,
-.player__toggle:focus-visible{
+.player__toggle:focus-within{
   border-color: var(--accent-active);
   box-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* mini disc button — dedicated play/pause control, independent of expand/collapse */
+.player__disc-btn{
+  display: grid;
+  place-items: center;
+  flex: none;
+  padding: 0.15rem;
+  border: none;
+  background: transparent;
+  border-radius: 50%;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 200ms ease;
+}
+
+.player__disc-btn:hover{ transform: scale(1.07); }
+.player__disc-btn:active{ transform: scale(0.92); }
+.player__disc-btn:focus-visible{
+  outline: 2px solid var(--accent-active);
+  outline-offset: 2px;
 }
 
 .player__disc{
@@ -502,6 +521,8 @@ main{
   background:
     radial-gradient(circle at 50% 50%, var(--accent-active) 0%, var(--accent-active) 6%, var(--bg-glow) 7%, var(--bg-glow) 40%, var(--border-subtle) 41%, var(--bg-base) 100%);
   border: 1px solid var(--border-subtle);
+  display: grid;
+  place-items: center;
 }
 
 .player[data-playing="true"] .player__disc{
@@ -513,6 +534,43 @@ main{
   inset: 28%;
   border: 1px solid var(--border-subtle);
   border-radius: 50%;
+}
+
+/* play/pause glyph that appears over the mini disc on hover/focus, for click affordance */
+.player__disc-icon{
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  color: var(--text-primary);
+  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.55));
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.player__disc-btn:hover .player__disc-icon,
+.player__disc-btn:focus-visible .player__disc-icon{
+  opacity: 1;
+}
+
+/* dedicated expand/collapse control — never touches playback */
+.player__meta-btn{
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex: 1;
+  min-width: 0;
+  padding: 0.2rem 0.2rem 0.2rem 0.05rem;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  border-radius: 999px;
+}
+
+.player__meta-btn:focus-visible{
+  outline: 2px solid var(--accent-active);
+  outline-offset: 2px;
 }
 
 .player__toggle-meta{
@@ -704,16 +762,48 @@ main{
 
 .player__btn--play .icon-play{ margin-left: 1px; }
 
+/* Play/pause icon swap. Driven by [data-playing] on the player root, NOT
+   the SVG "hidden" property — svg.hidden is a no-op in browsers because
+   SVGElement doesn't implement the HTMLElement "hidden" reflection, so
+   toggling it silently does nothing to what's rendered. */
+.player__btn--play .icon-pause,
+.player__disc-icon.icon-pause{
+  display: none;
+}
+
+.player[data-playing="true"] .player__btn--play .icon-play,
+.player[data-playing="true"] .player__disc-icon.icon-play{
+  display: none;
+}
+
+.player[data-playing="true"] .player__btn--play .icon-pause,
+.player[data-playing="true"] .player__disc-icon.icon-pause{
+  display: block;
+}
+
 .player__btn--small{
   width: 1.6rem;
   height: 1.6rem;
   flex: none;
 }
 
+/* Mute/unmute icon swap — same reasoning as above. */
+.player__btn--small .icon-mute{
+  display: none;
+}
+
+.player[data-muted="true"] .player__btn--small .icon-vol{
+  display: none;
+}
+
+.player[data-muted="true"] .player__btn--small .icon-mute{
+  display: block;
+}
+
 .player__volume{
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
   margin-left: auto;
 }
 

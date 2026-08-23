@@ -21,7 +21,7 @@
     { number: "21ST", title: "TWENTY-FIRST", url: "./monthsaries/21st/" },
     { number: "22ND", title: "TWENTY-SECOND", url: "./monthsaries/22nd/" },
     { number: "23RD", title: "TWENTY-THIRD", url: "./monthsaries/23rd/" },
-    { number: "24TH", title: "TWENTY-FOURTH", url: "./monthsaries/24th/" },
+    { number: "Second Anniversary", title: "TWENTY-FOURTH", url: "./monthsaries/24th/" },
   ];
 
   const HAS_GSAP = typeof window.gsap !== "undefined";
@@ -207,7 +207,7 @@
       text.className = "archive-card__text";
       const label = document.createElement("span");
       label.className = "archive-card__label";
-      label.textContent = `ARCHIVE ${String(i + 1).padStart(2, "0")} / 12`;
+      label.textContent = `MEMORIES ${String(i + 1).padStart(2, "0")} / 12`;
       const title = document.createElement("span");
       title.className = "archive-card__title";
       title.textContent = m.title + " MONTH";
