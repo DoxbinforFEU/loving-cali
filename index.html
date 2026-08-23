@@ -22,6 +22,13 @@
 </head>
 <body>
 
+  <!-- ===================== BACKGROUND MUSIC =====================
+       Plays automatically on load. script.js handles play() and the
+       browser's autoplay-permission fallback (starts on first user
+       gesture if the browser blocks unmuted autoplay). The nav player
+       button (below) reflects and controls the play/pause state. -->
+  <audio data-bg-audio src="./lobby.mp3" loop preload="auto" playsinline></audio>
+
   <!-- ===================== LOADER ===================== -->
   <div class="loader" data-loader role="status" aria-label="Loading archive">
     <span class="loader__mark">MIKHAIL × CALI</span>
@@ -33,6 +40,12 @@
   <header class="site-nav" data-nav>
     <span class="site-nav__mark">Mikhail × Cali</span>
     <div class="site-nav__right">
+      <button class="audio-toggle" type="button" data-audio-toggle aria-pressed="false" aria-label="Play background music">
+        <span class="audio-toggle__bars" data-audio-bars aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+        <span class="audio-toggle__label" data-audio-label>Music</span>
+      </button>
       <a class="site-nav__link" href="#archive">
         <span class="site-nav__dot" aria-hidden="true"></span>&nbsp; memories
       </a>
