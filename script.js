@@ -435,6 +435,115 @@
   }
 
   /* -----------------------------------------------------------------------
+     08.5 — BACKGROUND MUSIC (autoplay + nav player button)
+
+     Browsers block *unmuted* autoplay outright on a fresh visit — there is
+     no way around that from script.js, no matter how the play() call is
+     structured. Muted autoplay, however, is always permitted, so we start
+     the track muted immediately on load (it reports as truly "playing"
+     right away) and unmute automatically on the very first interaction
+     with the page — not just a click on the button, but any pointer
+     move, key press, touch, or scroll — so audible sound kicks in almost
+     instantly rather than waiting on a deliberate click.
+     ---------------------------------------------------------------------- */
+  function initBackgroundAudio() {
+    const audio = document.querySelector("[data-bg-audio]");
+    const toggle = document.querySelector("[data-audio-toggle]");
+    const label = document.querySelector("[data-audio-label]");
+    if (!audio) return;
+
+    audio.loop = true;
+    audio.volume = 1;
+    audio.muted = true; // required for guaranteed autoplay; lifted on first interaction
+
+    // Once the user has explicitly hit pause, autoplay/resume/unmute logic
+    // backs off entirely and leaves the choice to them.
+    let userPaused = false;
+
+    function setUIPlaying(isPlaying) {
+      if (!toggle) return;
+      const audible = isPlaying && !audio.muted;
+      toggle.classList.toggle("is-playing", audible);
+      toggle.setAttribute("aria-pressed", String(isPlaying));
+      toggle.setAttribute("aria-label", isPlaying ? (audible ? "Pause background music" : "Unmute background music") : "Play background music");
+      if (label) label.textContent = isPlaying ? (audible ? "Playing" : "Muted") : "Music";
+    }
+
+    const tryPlay = () => {
+      if (userPaused || !audio.paused) return;
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => setUIPlaying(true))
+          .catch(() => {
+            // Even muted autoplay can be blocked in rare cases (e.g. data-saver
+            // mode) — will retry on first user gesture below.
+          });
+      }
+    };
+
+    const unmute = () => {
+      if (userPaused) return;
+      audio.muted = false;
+      setUIPlaying(!audio.paused);
+    };
+
+    // Fires on the very first interaction of any kind, anywhere on the
+    // page: pointer movement, click, key, touch, or scroll.
+    const onFirstGesture = () => {
+      if (audio.paused) tryPlay();
+      unmute();
+      removeGestureListeners();
+    };
+    const gestureEvents = ["pointerdown", "pointermove", "keydown", "touchstart", "wheel", "scroll"];
+
+    function removeGestureListeners() {
+      gestureEvents.forEach((evt) =>
+        window.removeEventListener(evt, onFirstGesture)
+      );
+    }
+
+    gestureEvents.forEach((evt) =>
+      window.addEventListener(evt, onFirstGesture, { passive: true })
+    );
+
+    tryPlay();
+
+    // If the tab was backgrounded and the browser paused it, resume
+    // quietly when it becomes visible again (unless the user paused it
+    // themselves).
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible" && audio.paused && !userPaused) {
+        tryPlay();
+      }
+    });
+
+    // Visible play/pause control. Clicking it also counts as the
+    // interaction that unmutes, so a paused/muted track both plays and
+    // becomes audible in one tap.
+    if (toggle) {
+      toggle.addEventListener("click", () => {
+        removeGestureListeners();
+        if (audio.paused) {
+          userPaused = false;
+          audio.muted = false;
+          audio.play().then(() => setUIPlaying(true)).catch(() => {});
+        } else if (audio.muted) {
+          audio.muted = false;
+          setUIPlaying(true);
+        } else {
+          userPaused = true;
+          audio.pause();
+          setUIPlaying(false);
+        }
+      });
+    }
+
+    audio.addEventListener("play", () => setUIPlaying(true));
+    audio.addEventListener("pause", () => setUIPlaying(false));
+  }
+
+  /* -----------------------------------------------------------------------
      09 — RESPONSIVE HANDLING
      ---------------------------------------------------------------------- */
   function initResponsiveHandling() {
@@ -455,6 +564,7 @@
     initCardTransition();
     initCursor();
     initNavigation();
+    initBackgroundAudio();
     initResponsiveHandling();
     initScrollAnimations();
   }
