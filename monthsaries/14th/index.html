@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>14th Monthsary — Mikhail × Cali</title>
+<meta name="description" content="A memory space for Mikhail and Cali — fourteen months.">
+
+<!-- FONTS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- GRAIN / VIGNETTE OVERLAY -->
+<div class="grain" aria-hidden="true"></div>
+
+<!-- JOURNEY PROGRESS RAIL -->
+<div class="progress-rail" aria-hidden="true">
+    <span class="progress-rail-fill" id="progressFill"></span>
+</div>
+
+<!-- PRELOADER -->
+<div class="preloader" id="preloader" aria-hidden="true">
+    <span class="preloader-num">14</span>
+</div>
+
+<!-- ============================================ -->
+<!-- NAVIGATION -->
+<!-- ============================================ -->
+<header class="navbar" id="navbar">
+    <div class="nav-inner">
+        <a href="#top" class="nav-brand">Mikhail <span class="cross">×</span> Cali</a>
+
+        <nav class="nav-links" id="navLinks" aria-label="Primary">
+            <button class="nav-link" id="musicToggle" type="button" aria-pressed="false">
+                <span class="nav-link-icon" id="musicIcon">▶</span>
+                <span class="nav-link-text">Music</span>
+            </button>
+            <a href="#memories" class="nav-link" data-scroll>
+                <span class="nav-link-icon">•</span>
+                <span class="nav-link-text">Memories</span>
+            </a>
+            <a href="#gallery" class="nav-link" data-scroll>
+                <span class="nav-link-icon">•</span>
+                <span class="nav-link-text">Gallery</span>
+            </a>
+            <!-- RETURN TO MAIN WEBSITE -->
+            <!-- Update href below to the real path of the main navigation hub when available -->
+            <a href="../../index.html" class="nav-link nav-back" id="navBack">
+                <span class="nav-link-icon">←</span>
+                <span class="nav-link-text">Navigation</span>
+            </a>
+        </nav>
+
+        <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+            <span></span><span></span>
+        </button>
+    </div>
+</header>
+
+<!-- mobile menu panel -->
+<div class="mobile-menu" id="mobileMenu">
+    <a href="#hero" class="mobile-link" data-scroll data-close>14th</a>
+    <a href="#moments" class="mobile-link" data-scroll data-close>Moments</a>
+    <a href="#chapters" class="mobile-link" data-scroll data-close>Chapters</a>
+    <a href="#memories" class="mobile-link" data-scroll data-close>Memories</a>
+    <a href="#gallery" class="mobile-link" data-scroll data-close>Gallery</a>
+    <button class="mobile-link mobile-music" id="musicToggleMobile" type="button">▶ Music</button>
+    <a href="../../index.html" class="mobile-link mobile-back">← Back to Navigation</a>
+</div>
+
+<main id="top">
+
+<!-- ============================================ -->
+<!-- HERO -->
+<!-- ============================================ -->
+<section class="hero" id="hero">
+    <div class="hero-frame" aria-hidden="true"></div>
+
+    <div class="hero-atmosphere" aria-hidden="true">
+        <div class="hero-glow"></div>
+        <div class="hero-line hero-line-1"></div>
+        <div class="hero-line hero-line-2"></div>
+        <span class="hero-watermark">Mikhail × Cali</span>
+    </div>
+
+    <div class="hero-grid">
+        <div class="hero-content">
+            <p class="hero-eyebrow" data-anim="fade">A monthsary, marked</p>
+
+            <h1 class="hero-title">
+                <span class="hero-title-row" data-anim="title">
+                    <span class="hero-num">14</span><span class="hero-num-suffix">th</span>
+                </span>
+                <span class="hero-title-row hero-title-row-2" data-anim="title">Monthsary</span>
+            </h1>
+
+            <p class="hero-names" data-anim="fade">Mikhail <span class="cross">×</span> Cali</p>
+
+            <p class="hero-sub" data-anim="fade">Ikaw ang nagsilbing globo ko, sa kadahilanan na ginusto ko na magiging ikot at andar ng aking buhay ay nakapaligid din sa iyo. Ikaw ang mundo ko, nagsilbing simula patungo sa kagandahan ng aking pelikula na naging sa iyo nadin. Ikaw ang dulo ng hangganan ko.</p>
+        </div>
+
+        <figure class="hero-panel" data-anim="fade">
+            <img src="images/image-06.jpg" alt="Mikhail and Cali" loading="eager">
+            <figcaption class="hero-panel-tag">
+                <span class="hero-panel-num">14</span>
+                <span class="hero-panel-label">Months in</span>
+            </figcaption>
+        </figure>
+    </div>
+
+    <div class="hero-scroll" data-anim="fade">
+        <span class="hero-scroll-line"></span>
+        <span class="hero-scroll-label">Scroll</span>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!-- THE 14TH -->
+<!-- ============================================ -->
+<section class="the-14th" id="the14th">
+    <div class="section-frame">
+        <div class="s14-left">
+            <p class="eyebrow">Section 01</p>
+            <h2 class="s14-heading">Sinulat ng tadhana</h2>
+            <p class="s14-body">Ano kaya ang naging rason kung bakit tayo ay nagka-tagpuan ng landas?</p>
+            <p class="s14-body s14-body-muted">Syempre, alam kasi ni tadhana, na ako lang makakatibok ng puso mong matigas. Yung tipong kahit sobrang lamig ng panahon, napapainit ko ulo mo. [Joke lang] Mahal kita, at sa simula ng ating pang katorseng celebrasyon ng pagsasama, malaman mo sana, na ikaw lang ang tatagpuin ng aking mga mata.</p>
+        </div>
+
+        <div class="s14-right">
+            <span class="s14-panel" aria-hidden="true"></span>
+            <span class="s14-giant">14</span>
+            <div class="s14-caption">
+                <span class="s14-caption-line"></span>
+                <p>Months <br>With <br>You</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!-- OUR MOMENTS -->
+<!-- ============================================ -->
+<section class="moments" id="moments">
+    <div class="section-head">
+        <p class="eyebrow">Section 02</p>
+        <h2 class="section-title">Kay ganda mo.</h2>
+        <p class="section-intro">Kabigha-bighani ang silaw ng kagandahan mo, pahalik nga</p>
+    </div>
+
+    <div class="moments-timeline" id="momentsTimeline">
+        <span class="moments-spine" aria-hidden="true"></span>
+
+        <article class="moment" data-anim="reveal">
+            <span class="moment-dot" aria-hidden="true"></span>
+            <span class="moment-num">01</span>
+            <div class="moment-body">
+                <img class="moment-image" src="images/image-02.jpg" alt="A soft portrait beside a glowing microphone" loading="lazy">
+                <p class="moment-date">Hanggang Dulo</p>
+                <h3 class="moment-title">Napaka ganda mo no?</h3>
+                <p class="moment-desc">"Pa kiss nga" Ang aking mga birit sa tuwing gusto ko mag-palambing na may onting hagipit ng kilig. Halikan mo na kasi ako no.</p>
+            </div>
+        </article>
+
+        <article class="moment" data-anim="reveal">
+            <span class="moment-dot" aria-hidden="true"></span>
+            <span class="moment-num">02</span>
+            <div class="moment-body">
+                <img class="moment-image" src="images/image-04.jpg" alt="Two close faces sharing a moment on a bus" loading="lazy">
+                <p class="moment-date">Umuwi Kana</p>
+                <h3 class="moment-title">Laging inaabangan ko sa tuwing pag-uwi galing iskwela</h3>
+                <p class="moment-desc">Kahit ilang memorya na ang nagdaan, wala padin kupas ang pakiramdam ng bagabag sa aking puso, sa tuwing ikaw ang lagi kong hinahanap kada pauwi na ako.</p>
+            </div>
+        </article>
+
+        <article class="moment" data-anim="reveal">
+            <span class="moment-dot" aria-hidden="true"></span>
+            <span class="moment-num">03</span>
+            <div class="moment-body">
+                <img class="moment-image" src="images/image-07.jpg" alt="A close portrait with glasses and a playful pose" loading="lazy">
+                <p class="moment-date">Nakakalamot Puso</p>
+                <h3 class="moment-title">Yang pagtingin mo saakin, iba eh, may postura.</h3>
+                <p class="moment-desc">Alam ko na kahit hindi mo sinasabi, nababahuan kana saakin. [Joke lang] Pero maseryoso naman ang ating usapan, kada nakikita ko ang mga porma mo, pag-ayos mo sa sarili mo, at pagpasensya mo sa bawat pag angat ng iyong kagandahan, namomotivate ako na gawin ko din yung mga great habits mo. Ikaw kasi eh, bakit mo ba ako inimpluwensiyahan ng ganito, pogi ko tuloy.</p>
+            </div>
+        </article>
+
+        <article class="moment" data-anim="reveal">
+            <span class="moment-dot" aria-hidden="true"></span>
+            <span class="moment-num">04</span>
+            <div class="moment-body">
+                <img class="moment-image" src="images/image-03.jpg" alt="A softly lit portrait in red and white" loading="lazy">
+                <p class="moment-date">Pagkakataon Muli</p>
+                <h3 class="moment-title">Mahalin mo ako ng todo, at pagkatiwalaan nang walang hanggan.</h3>
+                <p class="moment-desc">Araw araw ko hahatakin yang puso mong binihag ng iba, para saakin kalang laging mapupunta. Hindi sa direksyon ng iba, kundi sa landas ko lamang na medyo mapatag, pero sapat na para mapatunayan na tayo ang aangat habang nag-mamahalan ng tapat.</p>
+            </div>
+        </article>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!-- CHAPTERS -->
+<!-- ============================================ -->
+<section class="chapters" id="chapters">
+    <div class="section-head">
+        <p class="eyebrow">Section 03</p>
+        <h2 class="section-title">14 chapters</h2>
+        <p class="section-intro">Meron din naman palang ganda ang buhay.</p>
+    </div>
+
+    <div class="chapters-pin" id="chaptersPin">
+        <div class="chapters-track" id="chaptersGrid">
+            <!-- Populated by script.js: CHAPTERS_CONFIG -->
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!-- MEMORY ARCHIVE -->
+<!-- ============================================ -->
+<section class="archive" id="memories">
+    <div class="section-head">
+        <p class="eyebrow">Section 04</p>
+        <h2 class="section-title">Sumandal ka lang,</h2>
+        <p class="section-intro">Tapat ako sayo</p>
+    </div>
+
+    <div class="archive-list">
+        <article class="archive-entry" data-anim="reveal">
+            <div class="archive-meta">
+                <span class="archive-index">Pagdadasal</span>
+                <span class="archive-date">[September 17, 2026]</span>
+            </div>
+            <div class="archive-content">
+                <img class="archive-image" src="images/pray.jpg" alt="A quiet portrait with glasses" loading="lazy">
+                <h3 class="archive-title">Ipagdadasal kita, tayo.</h3>
+                <p class="archive-desc">Hindi man kita kasama araw-araw sa tabi ko, pero alam ko na kahit wala ako diyan, ay ligtas tayo parati. Dahil yun ang isa sa mga lagi kong hinihiling sa mga dasal ko.</p>
+            </div>
+        </article>
+
+        <article class="archive-entry" data-anim="reveal">
+            <div class="archive-meta">
+                <span class="archive-index">Paglalaro</span>
+                <span class="archive-date">[September 2, 2026]</span>
+            </div>
+            <div class="archive-content">
+                <img class="archive-image" src="images/play.jpg" alt="A mirror portrait in a softly lit room" loading="lazy">
+                <h3 class="archive-title"> Pag-kabata, hanggang sa pag-tanda</h3>
+                <p class="archive-desc">Hindi lang basta basta na laro, dala mula hanggang unang memorya ng ating pag-kabata, papunta sa naging memorya nating dalawa na ngayon ay magkasama. Sa simpleng habol-habolan, hindi ko napansin na ang isang laro ay naging representasyon nadin ng pagkahabol natin sa oras na hindi tumitigil, pero masaya ako na kahit mabilis ang oras, napapabagal natin sa pamamaraan nang pag-gawa ng madaming memoryang magkasama.</p>
+            </div>
+        </article>
+
+        <article class="archive-entry" data-anim="reveal">
+            <div class="archive-meta">
+                <span class="archive-index">Pagkain</span>
+                <span class="archive-date">[Auguest 29, 2026]</span>
+            </div>
+            <div class="archive-content">
+                <img class="archive-image" src="images/food.jpg" alt="A close portrait with a playful finger pose" loading="lazy">
+                <h3 class="archive-title">Kain lang ng kain.</h3>
+                <p class="archive-desc">Bawat kagat, dama hanggang balat. Chimichanga nga naman no' kay sarap kaso medyo nagmamahal. Pero ano kaba, wag mag-alala sa presyo, lahat naman gagawin ko para makita lang na busog ka at kuntento kahit medyo nagkukulang paminsan minsan. Sobrang laking pasasalamat ko sayo, dahil kahit hindi ko nabibigay kaagad sa iyo, nakukuha mo padin magpasalamat, at magbigay ng pagmamahal mo.</p>
+            </div>
+        </article>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!-- GALLERY -->
+<!-- ============================================ -->
+<section class="gallery" id="gallery">
+    <div class="section-head">
+        <p class="eyebrow">Section 05</p>
+        <h2 class="section-title">Photographs</h2>
+        <p class="section-intro">Ten frames from the last fourteen months.</p>
+    </div>
+
+    <div class="gallery-grid" id="galleryGrid">
+        <!-- Populated by script.js: galleryImages -->
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!-- OUR STORY / FINAL MESSAGE -->
+<!-- ============================================ -->
+<section class="finale" id="finale">
+    <div class="finale-frame" aria-hidden="true"></div>
+    <span class="finale-ghost" aria-hidden="true">14</span>
+    <div class="finale-lines" aria-hidden="true">
+        <span class="finale-line finale-line-h"></span>
+        <span class="finale-line finale-line-v"></span>
+    </div>
+
+    <div class="finale-content">
+        <p class="eyebrow" data-anim="fade">Section 06</p>
+        <h2 class="finale-title" data-anim="fade">Mikhail <span class="cross">×</span> Cali</h2>
+        <p class="finale-sub" data-anim="fade">14th Monthsary</p>
+
+        <p class="finale-message" data-anim="fade">
+            [Hindi pa tapos ang ating paglakbay sa ating mga buhay, ikaw sa bawat araw araw na magdaan.
+            Wala akong kailangan ipahiwatig, dahil alam ko na sa bawat pag-bigay ko ng piyesa ng aking sarili, mararamdaman mo ang aking pagibig.]
+        </p>
+
+        <a href="../index.html" class="finale-back" data-anim="fade">← Back to Navigation</a>
+    </div>
+</section>
+
+</main>
+
+<!-- ============================================ -->
+<!-- FOOTER -->
+<!-- ============================================ -->
+<footer class="footer">
+    <p class="footer-brand">Mikhail <span class="cross">×</span> Cali</p>
+    <p class="footer-meta">14th Monthsary <span class="footer-dot">·</span> © 2026</p>
+    <a href="../index.html" class="footer-link">← Back to Navigation</a>
+</footer>
+
+<!-- custom gallery cursor -->
+<div class="cursor-dot" id="cursorDot" aria-hidden="true">View</div>
+
+<!-- lightbox -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close photograph">✕</button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+</div>
+
+<!-- audio element, source configured in script.js -->
+<audio id="bgMusic" loop preload="none"></audio>
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
