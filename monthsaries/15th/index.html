@@ -1,44 +1,354 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>15TH — FIFTEENTH Monthsary | Mikhail × Cali</title>
-  <meta name="description" content="Mikhail × Cali — FIFTEENTH monthsary chapter. Coming soon.">
-  <meta name="robots" content="noindex, nofollow">
-  <link rel="icon" type="image/svg+xml" href="../../assets/icons/favicon.svg">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Archivo:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Archivo:wght@400;500;600&display=swap">
-
-  <link rel="stylesheet" href="../../style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>15TH — FIFTEENTH Monthsary | Mikhail × Cali</title>
+<meta name="description" content="Mikhail × Cali — fifteen months, a private love letter.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="../../assets/icons/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Archivo:wght@400;500;600&display=swap">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: { ink:'#0F0A0E', glow:'#23151E', cream:'#EDE3D5', rose:'#E8AFB7', muted:'#C29299', line:'#2D1C25', wine:'#5A1F33' },
+    fontFamily: { serif:['"Cormorant Garamond"','Times New Roman','serif'], sans:['Archivo','Helvetica Neue','Arial','sans-serif'] },
+    keyframes: {
+      float:{ '0%,100%':{transform:'translateY(0)'}, '50%':{transform:'translateY(-14px)'} },
+      shimmer:{ '0%':{backgroundPosition:'200% 0'}, '100%':{backgroundPosition:'-200% 0'} },
+      marquee:{ '0%':{transform:'translateX(0)'}, '100%':{transform:'translateX(-50%)'} },
+      beat:{ '0%,100%':{transform:'scale(1)'}, '15%':{transform:'scale(1.18)'}, '30%':{transform:'scale(1)'}, '45%':{transform:'scale(1.12)'} },
+      ring:{ '0%':{transform:'scale(.6)',opacity:'.6'}, '100%':{transform:'scale(1.8)',opacity:'0'} },
+      bars:{ '0%,100%':{height:'4px'}, '50%':{height:'12px'} }
+    },
+    animation: {
+      float:'float 6s ease-in-out infinite', shimmer:'shimmer 6s linear infinite',
+      marquee:'marquee 32s linear infinite', beat:'beat 2.4s ease-in-out infinite',
+      ring:'ring 3.2s ease-out infinite', bars:'bars .9s ease-in-out infinite'
+    }
+  } }
+};
+</script>
+<style>
+  .shimmer-text{background:linear-gradient(110deg,#EDE3D5 30%,#E8AFB7 45%,#fff 50%,#E8AFB7 55%,#EDE3D5 70%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;padding:.06em .04em .22em;margin:-.06em -.04em -.22em}
+  .stroke-text{-webkit-text-stroke:1px #E8AFB7;color:transparent}
+  :focus-visible{outline:2px solid #E8AFB7;outline-offset:4px}
+  .zoom{cursor:zoom-in}
+  .caret{display:inline-block;width:2px;height:1em;background:#E8AFB7;margin-left:3px;vertical-align:-.12em;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .reel-row:hover{animation-play-state:paused}
+  @media (prefers-reduced-motion:reduce){.caret{animation:none}}
+  .env-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .6s cubic-bezier(.16,1,.3,1)}
+  .env-panel>div{overflow:hidden}
+  .env[aria-expanded="true"]+.env-panel{grid-template-rows:1fr}
+  .env[aria-expanded="true"] .env-flap{transform:rotateX(180deg)}
+  .env-flap{transition:transform .6s;transform-origin:top}
+  @media (prefers-reduced-motion:reduce){.env-panel,.env-flap{transition:none}}
+</style>
 </head>
-<body>
-  <header class="site-nav" data-nav>
-    <span class="site-nav__mark">Mikhail × Cali</span>
-    <div class="site-nav__right">
-      <a class="site-nav__link" href="../../index.html#archive">
-        <span class="site-nav__dot" aria-hidden="true"></span>&nbsp; Archive
-      </a>
+<body class="bg-ink text-cream font-sans antialiased overflow-x-hidden selection:bg-rose selection:text-ink">
+
+<!-- progress bar -->
+<div id="bar" class="fixed top-0 left-0 right-0 h-px bg-rose origin-left scale-x-0 z-[120]"></div>
+
+<!-- preloader -->
+<div id="loader" class="fixed inset-0 z-[200] bg-ink flex flex-col items-center justify-center gap-4" role="status" aria-label="Loading">
+  <span id="loaderNum" class="font-serif text-[22vw] md:text-[12rem] leading-none text-rose/80 italic">00</span>
+  <span class="text-[11px] tracking-[.3em] uppercase text-muted">Mikhail × Cali</span>
+</div>
+
+<!-- cursor glow -->
+<div id="glowCursor" class="pointer-events-none fixed top-0 left-0 w-72 h-72 -ml-36 -mt-36 rounded-full bg-rose/10 blur-3xl z-[5] opacity-0 hidden md:block" aria-hidden="true"></div>
+
+<!-- lightbox -->
+<div id="lightbox" class="fixed inset-0 z-[300] hidden items-center justify-center bg-ink/95 backdrop-blur-sm p-4 md:p-10" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button id="lbClose" type="button" class="absolute top-5 right-5 md:top-8 md:right-10 text-[11px] tracking-[.22em] uppercase text-muted hover:text-rose transition-colors">Close &times;</button>
+  <figure class="max-w-full max-h-full flex flex-col items-center">
+    <img id="lbImg" src="" alt="" class="max-h-[78vh] max-w-full object-contain border border-line">
+    <figcaption id="lbCap" class="mt-5 font-serif italic text-rose text-xl text-center"></figcaption>
+  </figure>
+</div>
+
+<!-- nav -->
+<header class="fixed top-0 inset-x-0 z-[100] h-20 px-5 md:px-14 flex items-center justify-between bg-ink/70 backdrop-blur-md border-b border-line/60">
+  <span class="font-serif text-lg tracking-wide">Mikhail × Cali</span>
+  <div class="flex items-center gap-6 md:gap-8">
+    <button id="music" type="button" aria-pressed="false" aria-label="Play background music" class="flex items-center gap-2.5 text-[11px] tracking-[.22em] uppercase text-muted hover:text-rose transition-colors">
+      <span class="flex items-end gap-[2.5px] h-3" aria-hidden="true"><i class="w-[2px] h-1 bg-current block"></i><i class="w-[2px] h-1 bg-current block"></i><i class="w-[2px] h-1 bg-current block"></i></span>
+      <span class="hidden sm:inline" id="musicLabel">Music</span>
+    </button>
+    <a href="../../index.html#archive" class="text-[11px] tracking-[.22em] uppercase text-muted hover:text-rose transition-colors">&larr; Memories</a>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section id="hero" class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 overflow-hidden">
+  <div data-speed="-.25" class="absolute -top-20 -left-32 w-[60vw] h-[60vw] rounded-full bg-wine/40 blur-[120px]" aria-hidden="true"></div>
+  <div data-speed=".2" class="absolute -bottom-32 -right-24 w-[50vw] h-[50vw] rounded-full bg-glow blur-[100px]" aria-hidden="true"></div>
+  <svg class="absolute inset-0 w-full h-full opacity-60" viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true">
+    <path class="draw" pathLength="1" stroke="#2D1C25" d="M -50 620 C 200 560, 380 700, 640 610 S 1050 500, 1260 560"/>
+    <path class="draw" pathLength="1" stroke="#5A1F33" d="M -50 700 C 220 660, 420 780, 660 700 S 1040 610, 1260 660"/>
+    <path class="draw" pathLength="1" stroke="#2D1C25" d="M -50 780 C 240 760, 460 850, 700 790 S 1030 720, 1260 760"/>
+  </svg>
+  <div id="petals" class="absolute inset-0 pointer-events-none" aria-hidden="true"></div>
+
+  <div class="relative z-10" id="heroContent">
+    <p class="hero-in text-[11px] tracking-[.34em] uppercase text-muted mb-5">Private Memories / Chapter 03</p>
+    <p class="hero-in font-serif text-3xl md:text-5xl mb-2">Mikhail <span class="text-rose italic">×</span> Cali</p>
+    <h1 class="relative font-serif font-semibold leading-[.85] text-[34vw] md:text-[18rem]" aria-label="15th">
+      <span class="absolute inset-0 flex items-center justify-center" aria-hidden="true"><i class="block w-[40vw] h-[40vw] md:w-[24rem] md:h-[24rem] rounded-full border border-rose/30 animate-ring"></i></span>
+      <span class="relative inline-flex items-start"><span class="hero-char inline-block shimmer-text animate-shimmer">1</span><span class="hero-char inline-block shimmer-text animate-shimmer">5</span><em class="hero-char not-italic text-rose font-serif text-[8vw] md:text-6xl mt-[4vw] md:mt-10 ml-1">TH</em></span>
+    </h1>
+    <p class="hero-in mt-6 text-[13px] tracking-[.22em] uppercase text-muted">Fifteen months of loving you</p>
+  </div>
+
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 text-[10px] tracking-[.3em] uppercase text-muted animate-float motion-reduce:animate-none" aria-hidden="true">
+    Scroll <span class="w-px h-10 bg-gradient-to-b from-rose to-transparent"></span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="border-y border-line py-5 overflow-hidden bg-glow/40" aria-hidden="true">
+  <div class="flex w-max animate-marquee motion-reduce:animate-none font-serif italic text-3xl md:text-5xl text-cream/80 whitespace-nowrap">
+    <span class="px-6">fifteen months <b class="text-rose not-italic">✦</b> Happy Monthsarry! <b class="text-rose not-italic">✦</b> Will Always Be You <b class="text-rose not-italic">✦</b> Mikhail × Cali <b class="text-rose not-italic">✦</b> My lovely <b class="text-rose not-italic">✦</b> Baby Chachie <b class="text-rose not-italic">✦</b> Ayayu! <b class="text-rose not-italic">✦</b> Mikhail × Cali <b class="text-rose not-italic">✦</b></span>
+    <span class="px-6">fifteen months <b class="text-rose not-italic">✦</b> Happy Monthsarry! <b class="text-rose not-italic">✦</b> Will Always Be You <b class="text-rose not-italic">✦</b> Mikhail × Cali <b class="text-rose not-italic">✦</b> My lovely <b class="text-rose not-italic">✦</b> Baby Chachie <b class="text-rose not-italic">✦</b> Ayayu! <b class="text-rose not-italic">✦</b> Mikhail × Cali <b class="text-rose not-italic">✦</b></span>
+  </div>
+</div>
+
+<!-- LETTER -->
+<section id="letter" class="relative px-6 md:px-14 py-32 md:py-48 flex justify-center">
+  <span data-speed="-.3" class="absolute left-[4%] top-10 font-serif text-[40vw] md:text-[26rem] leading-none text-cream/[.03] select-none" aria-hidden="true">15</span>
+  <div class="relative max-w-3xl text-center">
+    <p class="text-[11px] tracking-[.34em] uppercase text-muted mb-8">A letter, Cali</p>
+    <p id="letterText" class="font-serif text-2xl md:text-4xl leading-snug">A discord meet back in 23, such a shock sight, to see you after the three. Times where arguments strikes us endless, fate gives us a reason, a sign to strike back like how we always are. No need to search for meaning, you are the meaningful part. Just look at how we are, how you are, it'll always be more than enough of a reason to settle.</p>
+    <p class="mt-10 font-serif italic text-rose text-2xl">— Mikhail</p>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="px-6 md:px-14 pb-32">
+  <div class="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3 border-y border-line">
+    <div class="stat py-12 text-center sm:border-r border-line"><div class="font-serif text-7xl text-rose"><span data-count="15">0</span></div><p class="mt-2 text-[11px] tracking-[.28em] uppercase text-muted">Months together</p></div>
+    <div class="stat py-12 text-center sm:border-r border-line"><div class="font-serif text-7xl text-rose"><span data-count="65">0</span>+</div><p class="mt-2 text-[11px] tracking-[.28em] uppercase text-muted">Weeks of us</p></div>
+    <div class="stat py-12 text-center"><div class="font-serif text-7xl text-rose animate-beat motion-reduce:animate-none inline-block">1</div><p class="mt-2 text-[11px] tracking-[.28em] uppercase text-muted">Love, only you</p></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="px-6 md:px-14 py-24 overflow-hidden">
+  <div class="text-center mb-20">
+    <p class="text-[11px] tracking-[.34em] uppercase text-muted mb-4">Section 01</p>
+    <h2 class="font-serif text-5xl md:text-7xl">Frames of <em class="text-rose">us</em></h2>
+    <p class="mt-5 text-[11px] tracking-[.22em] uppercase text-muted">Tap any photo to hold it closer</p>
+  </div>
+  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-y-16 md:gap-y-28 gap-x-8">
+    <figure data-speed=".05" class="reveal md:col-span-5">
+      <div class="zoom relative aspect-[4/5] overflow-hidden border border-line bg-gradient-to-br from-glow to-wine/50" tabindex="0" role="button" aria-label="View photo larger"><img data-img src="images/01.jpg" alt="Cali smiling softly in glasses" loading="lazy" class="absolute inset-x-0 -top-[10%] w-full h-[120%] object-cover"></div>
+      <figcaption class="mt-4 flex gap-4 items-baseline"><span class="font-serif italic text-rose">01</span><span class="text-[11px] tracking-[.22em] uppercase text-muted">Ganda Baby</span></figcaption>
+    </figure>
+    <figure data-speed=".2" class="reveal md:col-span-4 md:col-start-8 md:mt-32">
+      <div class="zoom relative aspect-[3/4] overflow-hidden border border-line bg-gradient-to-br from-wine/40 to-glow" tabindex="0" role="button" aria-label="View photo larger"><img data-img src="images/02.jpg" alt="Mikhail in a blue room with red velvet chairs" loading="lazy" class="absolute inset-x-0 -top-[10%] w-full h-[120%] object-cover"></div>
+      <figcaption class="mt-4 flex gap-4 items-baseline"><span class="font-serif italic text-rose">02</span><span class="text-[11px] tracking-[.22em] uppercase text-muted">Pogi ko noh?</span></figcaption>
+    </figure>
+    <figure data-speed="-.05" class="reveal md:col-span-12">
+      <div class="zoom relative aspect-[16/9] overflow-hidden border border-line bg-gradient-to-r from-glow via-wine/40 to-glow" tabindex="0" role="button" aria-label="View photo larger"><img data-img src="images/03.jpg" alt="Cali posing in a mirror beside blue string lights" loading="lazy" class="absolute inset-x-0 -top-[10%] w-full h-[120%] object-cover"></div>
+      <figcaption class="mt-4 flex gap-4 items-baseline justify-center"><span class="font-serif italic text-rose">03</span><span class="text-[11px] tracking-[.22em] uppercase text-muted">I'll be here</span></figcaption>
+    </figure>
+    <figure data-speed=".15" class="reveal md:col-span-4 md:col-start-2">
+      <div class="zoom relative aspect-[4/5] overflow-hidden border border-line bg-gradient-to-br from-glow to-wine/50" tabindex="0" role="button" aria-label="View photo larger"><img data-img src="images/04.jpg" alt="Cali hiding a smile behind her orangutan plush" loading="lazy" class="absolute inset-x-0 -top-[10%] w-full h-[120%] object-cover object-[35%_50%]"></div>
+      <figcaption class="mt-4 flex gap-4 items-baseline"><span class="font-serif italic text-rose">04</span><span class="text-[11px] tracking-[.22em] uppercase text-muted">Always You</span></figcaption>
+    </figure>
+    <figure data-speed=".3" class="reveal md:col-span-5 md:col-start-7 md:mt-24">
+      <div class="zoom relative aspect-[4/5] overflow-hidden border border-line bg-gradient-to-br from-wine/40 to-glow" tabindex="0" role="button" aria-label="View photo larger"><img data-img src="images/05.jpg" alt="Mikhail in a black fleece jacket" loading="lazy" class="absolute inset-x-0 -top-[10%] w-full h-[120%] object-cover"></div>
+      <figcaption class="mt-4 flex gap-4 items-baseline"><span class="font-serif italic text-rose">05</span><span class="text-[11px] tracking-[.22em] uppercase text-muted">Will always be yours</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- KINETIC WORDS + TYPEWRITER -->
+<section id="kinetic" class="py-24 md:py-40 overflow-hidden border-y border-line">
+  <div class="k-row whitespace-nowrap font-serif font-semibold text-[22vw] md:text-[15rem] leading-[.95] stroke-text w-max" aria-hidden="true">I'll marry you &middot; I'll marry you &middot; I'll marry you &middot; I'll marry you</div>
+  <div class="k-row whitespace-nowrap font-serif italic text-[22vw] md:text-[15rem] leading-[.95] text-rose/80 w-max" aria-hidden="true">Till death do us apart. &middot; Till death do us apart. &middot; Till death do us apart &middot; Till death do us apart</div>
+  <div class="px-6 md:px-14 text-center mt-24">
+    <p class="text-[11px] tracking-[.34em] uppercase text-muted mb-4">Section 02</p>
+    <h2 class="font-serif text-5xl md:text-7xl">You are more than <span data-scramble="what you think" class="text-rose italic">what you think.</span></h2>
+    <div class="max-w-2xl mx-auto mt-14 text-left border border-line bg-glow/40 p-8 md:p-12">
+      <p class="text-[11px] tracking-[.28em] uppercase text-muted mb-6">Note &middot; 15 / 24</p>
+      <p id="typeWrap" class="font-serif text-2xl md:text-3xl leading-relaxed"><span id="typeText">Great things take time, hold on to me. I'll be the one and only that you will have for the rest of your life. I'm here till death do us apart, woopsie, poopsie, alaskie, hotsie, badoopsie, I love you mommy. No matter what type of hardships the world gives us, it's just a woopsie, when things feel bad, lets take a poopsie. When the air turns cold like alaskie, let's make it hotsie, and good things take time, even the badoopsies.</span><i class="caret" aria-hidden="true"></i></p>
     </div>
-  </header>
+  </div>
+</section>
 
-  <main>
-    <section class="stub">
-      <svg class="stub__contour" viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
-        <path d="M -50 620 C 200 560, 380 700, 640 610 S 1050 500, 1260 560" />
-        <path d="M -50 780 C 240 760, 460 850, 700 790 S 1030 720, 1260 760" />
-      </svg>
+<!-- PHOTOBOOTH -->
+<section id="booth" class="relative px-6 md:px-14 py-28 md:py-40 bg-glow/40 border-y border-line">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-14 items-start">
+    <div class="md:col-span-5 md:sticky md:top-28 flex justify-center">
+      <figure class="booth-strip relative w-[min(72vw,300px)] rotate-[-3deg] shadow-[0_30px_80px_rgba(0,0,0,.55)]">
+        <div class="zoom" tabindex="0" role="button" aria-label="View photo strip larger"><img data-img src="images/06.jpg" alt="Four-frame photobooth strip of Mikhail and Cali: a loud pose, a head on a shoulder, a hug from behind, and matching animal hats" width="470" height="1400" loading="lazy" class="w-full h-auto"></div>
+        <span class="absolute -right-3 -top-3 text-rose text-3xl animate-beat motion-reduce:animate-none" aria-hidden="true">♥</span>
+      </figure>
+    </div>
+    <div class="md:col-span-7 md:pt-10">
+      <p class="text-[11px] tracking-[.34em] uppercase text-muted mb-4">Section 03</p>
+      <h2 class="font-serif text-5xl md:text-7xl leading-[.95]">A photo from the booth, <em class="text-rose">picsiewabadiboop.</em></h2>
+      <p class="mt-6 max-w-md font-serif italic text-xl text-muted">A picture worth the wait, every single penny, worth the spend.</p>
+      <ol class="mt-14 space-y-12">
+        <li class="booth-line border-t border-line pt-6"><span class="font-serif italic text-rose text-xl">i.</span><p class="mt-2 font-serif text-3xl md:text-4xl leading-tight">A scar may be negative for some, but this was something to hold on to when you go back home.</p><p class="mt-2 text-[11px] tracking-[.22em] uppercase text-muted">You bite me, I say ouchie.</p></li>
+        <li class="booth-line border-t border-line pt-6"><span class="font-serif italic text-rose text-xl">ii.</span><p class="mt-2 font-serif text-3xl md:text-4xl leading-tight">Don't be afraid to rest, I'm here, like a pillow that gives you the comfort when lonely nights are endless.</p><p class="mt-2 text-[11px] tracking-[.22em] uppercase text-muted">A shoulder to lean on.</p></li>
+        <li class="booth-line border-t border-line pt-6"><span class="font-serif italic text-rose text-xl">iii.</span><p class="mt-2 font-serif text-3xl md:text-4xl leading-tight">Ride on my back, when you're tired. We'll travel miles and miles together, till the end of the world!</p><p class="mt-2 text-[11px] tracking-[.22em] uppercase text-muted">I'll be your we bare bear.</p></li>
+        <li class="booth-line border-t border-line pt-6"><span class="font-serif italic text-rose text-xl">iv.</span><p class="mt-2 font-serif text-3xl md:text-4xl leading-tight">You and me, we're connected. ust like what people say, when 2 people look alike, they're meant to be.</p><p class="mt-2 text-[11px] tracking-[.22em] uppercase text-muted">You're like a mini me.</p></li>
+      </ol>
+    </div>
+  </div>
+</section>
 
-      <span class="eyebrow stub__eyebrow">Private Archive / Chapter 03</span>
-      <h1 class="stub__number">15TH</h1>
-      <p class="stub__title">FIFTEENTH Month</p>
-      <p class="stub__message">Coming Soon</p>
-      <a class="stub__return" href="../../index.html#archive">&larr; Return to Archive</a>
-    </section>
-  </main>
+<!-- TWO OF US -->
+<section id="duo" class="px-6 md:px-14 py-28 md:py-44 overflow-hidden">
+  <div class="text-center mb-20">
+    <p class="text-[11px] tracking-[.34em] uppercase text-muted mb-4">Section 04</p>
+    <h2 class="font-serif text-5xl md:text-7xl">Two <em class="text-rose">of us</em></h2>
+  </div>
+  <div class="relative max-w-5xl mx-auto grid md:grid-cols-2 gap-14 md:gap-24">
+    <svg class="hidden md:block absolute left-1/2 top-0 -translate-x-1/2 h-full w-px" aria-hidden="true"><line class="duo-line" x1="0" y1="0" x2="0" y2="100%" stroke="#E8AFB7" stroke-opacity=".35" stroke-dasharray="2 8"/></svg>
+    <figure class="duo reveal-duo md:mt-0">
+      <div class="zoom relative aspect-[3/4] overflow-hidden border border-line bg-glow" tabindex="0" role="button" aria-label="View photo larger"><img data-img src="images/07.jpg" alt="Mikhail in a black fleece, phone raised in front of his face" loading="lazy" class="absolute inset-x-0 -top-[10%] w-full h-[120%] object-cover"></div>
+      <figcaption class="mt-5"><span class="font-serif text-3xl">Him</span><p class="mt-1 font-serif italic text-muted text-lg">I'll be your escort, bodyguard, bestfriend, lover, boyfriend, fiancee, husband.</p></figcaption>
+    </figure>
+    <figure class="duo reveal-duo md:mt-32">
+      <div class="zoom relative aspect-[3/4] overflow-hidden border border-line bg-glow" tabindex="0" role="button" aria-label="View photo larger"><img data-img src="images/08.jpg" alt="Cali close to the camera in black glasses with blue lights behind her" loading="lazy" class="absolute inset-x-0 -top-[10%] w-full h-[120%] object-cover object-[40%_50%]"></div>
+      <figcaption class="mt-5"><span class="font-serif text-3xl">Her</span><p class="mt-1 font-serif italic text-muted text-lg">You'll be mine, forever and ever. </p></figcaption>
+    </figure>
+  </div>
+</section>
 
+<!-- CHAT -->
+<section id="chat" class="px-6 md:px-14 py-28 md:py-40">
+  <div class="text-center mb-14">
+    <p class="text-[11px] tracking-[.34em] uppercase text-muted mb-4">Section 05</p>
+    <h2 class="font-serif text-5xl md:text-7xl">Sounds like <em class="text-rose">us</em></h2>
+  </div>
+  <div class="max-w-md mx-auto border border-line bg-glow/40 rounded-[2rem] p-5 md:p-7 shadow-[0_30px_80px_rgba(0,0,0,.45)]">
+    <div class="flex items-center gap-3 pb-4 border-b border-line">
+      <span class="w-10 h-10 rounded-full bg-gradient-to-br from-rose to-wine" aria-hidden="true"></span>
+      <div><p class="font-serif text-xl leading-none">Cali</p><p id="chatStatus" class="text-[10px] tracking-[.22em] uppercase text-muted mt-1">online &middot; always</p></div>
+    </div>
+    <div id="chatBody" class="py-6 flex flex-col gap-3 text-[15px] leading-snug">
+      <p class="bub w-fit max-w-[80%] px-4 py-2.5 bg-line rounded-2xl rounded-bl-sm origin-bottom-left">ijwu bubbi 🥺</p>
+      <p class="bub w-fit max-w-[80%] px-4 py-2.5 bg-wine rounded-2xl rounded-br-sm origin-bottom-right self-end">hewo mommy ko</p>
+      <p class="bub w-fit max-w-[80%] px-4 py-2.5 bg-line rounded-2xl rounded-bl-sm origin-bottom-left">I miss you</p>
+      <p class="bub w-fit max-w-[80%] px-4 py-2.5 bg-wine rounded-2xl rounded-br-sm origin-bottom-right self-end">I haven't made ligo yet</p>
+      <p class="bub w-fit max-w-[80%] px-4 py-2.5 bg-line rounded-2xl rounded-bl-sm origin-bottom-left">eewwww bantuttt</p>
+      <p class="bub w-fit max-w-[80%] px-4 py-2.5 bg-wine rounded-2xl rounded-br-sm origin-bottom-right self-end">I not bantut mommy</p>
+      <p class="bub w-fit max-w-[80%] px-4 py-2.5 bg-line rounded-2xl rounded-bl-sm origin-bottom-left">You are, I always right 💗</p>
+      <p class="bub w-fit max-w-[80%] px-4 py-2.5 bg-wine rounded-2xl rounded-br-sm origin-bottom-right self-end">always mommy, I love you sobwa</p>
+      <p class="bub w-fit max-w-[80%] px-4 py-2.5 bg-line rounded-2xl rounded-bl-sm origin-bottom-left">Ayayuuu most :3 ♥</p>
+    </div>
+  </div>
+</section>
+
+<!-- POLAROID WALL -->
+<section id="wall" class="px-6 md:px-14 py-28 md:py-40 overflow-hidden">
+  <div class="text-center mb-20">
+    <p class="text-[11px] tracking-[.34em] uppercase text-muted mb-4">Section 06</p>
+    <h2 class="font-serif text-5xl md:text-7xl">The <em class="text-rose">wall</em></h2>
+  </div>
+  <div id="wallGrid" class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-14"></div>
+</section>
+
+<!-- REEL -->
+<section id="reel" class="py-24 md:py-32 overflow-hidden border-y border-line bg-glow/40" aria-label="Photo reel">
+  <div class="reel-row flex w-max animate-marquee motion-reduce:animate-none" data-dur="90"></div>
+  <div class="reel-row flex w-max animate-marquee motion-reduce:animate-none mt-6" data-dur="110" style="animation-direction:reverse"></div>
+</section>
+
+<!-- REASONS -->
+<section id="reasons" class="relative px-6 md:px-14 py-28 md:py-40 bg-glow/40 border-y border-line text-center overflow-hidden">
+  <p class="text-[11px] tracking-[.34em] uppercase text-muted mb-4">Section 07</p>
+  <h2 class="font-serif text-5xl md:text-7xl">Fifteen <em class="text-rose">reasons</em></h2>
+  <div class="relative max-w-2xl mx-auto mt-16 min-h-[260px] md:min-h-[300px] flex items-center justify-center border border-line bg-ink/70 backdrop-blur px-8 py-12">
+    <p id="reasonText" class="font-serif text-3xl md:text-5xl leading-tight" aria-live="polite">Press the button. Every reason is true.</p>
+    <span id="reasonCount" class="absolute bottom-4 right-5 font-serif italic text-rose">0 / 15</span>
+  </div>
+  <div id="reasonDots" class="mt-6 flex justify-center gap-1.5" aria-hidden="true"></div>
+  <button id="reasonBtn" type="button" class="mt-10 px-8 py-4 border border-rose/60 text-rose text-[12px] font-semibold tracking-[.18em] uppercase hover:bg-rose hover:text-ink transition-colors duration-500">Give me a reason</button>
+</section>
+
+<!-- OPEN WHEN -->
+<section id="openwhen" class="px-6 md:px-14 py-28 md:py-40">
+  <div class="text-center mb-16">
+    <p class="text-[11px] tracking-[.34em] uppercase text-muted mb-4">Section 08</p>
+    <h2 class="font-serif text-5xl md:text-7xl">Open <em class="text-rose">when</em>&hellip;</h2>
+  </div>
+  <div class="max-w-2xl mx-auto border-t border-line">
+    <div class="border-b border-line">
+      <button type="button" class="env w-full flex items-center justify-between gap-6 py-7 text-left group" aria-expanded="false" aria-controls="env1">
+        <span class="font-serif text-3xl md:text-4xl group-hover:text-rose transition-colors">When you missie me</span>
+        <span class="env-flap text-rose text-2xl" aria-hidden="true">✉</span>
+      </button>
+      <div class="env-panel" id="env1"><div><p class="pb-8 font-serif italic text-xl md:text-2xl text-muted leading-relaxed">Rewatch our videos, reminisce through our times when we're physically together, hug a pillow, and It'll always feel like me :>.</p></div></div>
+    </div>
+    <div class="border-b border-line">
+      <button type="button" class="env w-full flex items-center justify-between gap-6 py-7 text-left group" aria-expanded="false" aria-controls="env2">
+        <span class="font-serif text-3xl md:text-4xl group-hover:text-rose transition-colors">When you feel fatsie</span>
+        <span class="env-flap text-rose text-2xl" aria-hidden="true">✉</span>
+      </button>
+      <div class="env-panel" id="env2"><div><p class="pb-8 font-serif italic text-xl md:text-2xl text-muted leading-relaxed">Eat baby, you're not fat, you're sexy, and you're nomnom. Every consistency you put towards yourself, is worth the wait. Keep eating mommy!</p></div></div>
+    </div>
+    <div class="border-b border-line">
+      <button type="button" class="env w-full flex items-center justify-between gap-6 py-7 text-left group" aria-expanded="false" aria-controls="env3">
+        <span class="font-serif text-3xl md:text-4xl group-hover:text-rose transition-colors">When you cannot sleep</span>
+        <span class="env-flap text-rose text-2xl" aria-hidden="true">✉</span>
+      </button>
+      <div class="env-panel" id="env3"><div><p class="pb-8 font-serif italic text-xl md:text-2xl text-muted leading-relaxed">I'll be here to sing to you, tuck you into bed, and put you in a state of calm & rest.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TAP TO SEND LOVE -->
+<section id="tap" class="relative px-6 py-32 md:py-48 text-center overflow-hidden select-none">
+  <p class="text-[11px] tracking-[.34em] uppercase text-muted mb-4">Section 09</p>
+  <h2 class="font-serif text-5xl md:text-7xl">Send me <em class="text-rose">love</em></h2>
+  <button id="tapBtn" type="button" class="relative mt-14 w-40 h-40 md:w-52 md:h-52 rounded-full border border-rose/50 text-rose hover:bg-rose/10 transition-colors duration-300" aria-label="Send a heart"><span class="block text-6xl md:text-7xl animate-beat motion-reduce:animate-none" aria-hidden="true">♥</span></button>
+  <p class="mt-8 font-serif italic text-2xl text-muted" aria-live="polite"><span id="tapCount" class="text-rose">0</span> <span id="tapNote">hearts sent</span></p>
+  <div id="heartLayer" class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true"></div>
+</section>
+
+<!-- PROMISES (pinned horizontal on desktop) -->
+<section id="promises" class="relative bg-glow/40 border-y border-line overflow-hidden py-24 md:py-0 md:h-screen md:flex md:items-center">
+  <div class="px-6 md:px-14 md:absolute md:top-24 md:left-0">
+    <p class="text-[11px] tracking-[.34em] uppercase text-muted mb-4">Section 10</p>
+    <h2 class="font-serif text-5xl md:text-7xl">Five <em class="text-rose">promises</em></h2>
+  </div>
+  <div id="track" class="flex gap-6 md:gap-10 px-6 md:px-14 mt-12 md:mt-24 overflow-x-auto md:overflow-visible w-full md:w-max snap-x snap-mandatory md:snap-none [scrollbar-width:none]">
+    <article class="promise snap-start shrink-0 w-[80vw] md:w-[30vw] h-[320px] md:h-[380px] p-8 border border-line overflow-hidden isolate relative flex flex-col justify-between hover:border-rose/60 transition-colors duration-500"><img src="images/09.jpg" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover object-center z-0"><span class="absolute inset-0 z-0 bg-gradient-to-t from-ink/90 via-ink/60 to-ink/45" aria-hidden="true"></span><span class="relative z-10 font-serif italic text-rose text-xl [text-shadow:0_2px_14px_rgba(0,0,0,.7)]">i.</span><p class="relative z-10 font-serif text-3xl leading-tight text-cream [text-shadow:0_2px_18px_rgba(0,0,0,.8)]">I love the way you put effort on the style of your hair.</p></article>
+    <article class="promise snap-start shrink-0 w-[80vw] md:w-[30vw] h-[320px] md:h-[380px] p-8 border border-line overflow-hidden isolate relative flex flex-col justify-between hover:border-rose/60 transition-colors duration-500"><img src="images/10.jpg" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover object-[60%_50%] z-0"><span class="absolute inset-0 z-0 bg-gradient-to-t from-ink/90 via-ink/60 to-ink/45" aria-hidden="true"></span><span class="relative z-10 font-serif italic text-rose text-xl [text-shadow:0_2px_14px_rgba(0,0,0,.7)]">ii.</span><p class="relative z-10 font-serif text-3xl leading-tight text-cream [text-shadow:0_2px_18px_rgba(0,0,0,.8)]">You make my heart warm, keep looking at me.</p></article>
+    <article class="promise snap-start shrink-0 w-[80vw] md:w-[30vw] h-[320px] md:h-[380px] p-8 border border-line overflow-hidden isolate relative flex flex-col justify-between hover:border-rose/60 transition-colors duration-500"><img src="images/11.jpg" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover object-[50%_28%] z-0"><span class="absolute inset-0 z-0 bg-gradient-to-t from-ink/90 via-ink/60 to-ink/45" aria-hidden="true"></span><span class="relative z-10 font-serif italic text-rose text-xl [text-shadow:0_2px_14px_rgba(0,0,0,.7)]">iii.</span><p class="relative z-10 font-serif text-3xl leading-tight text-cream [text-shadow:0_2px_18px_rgba(0,0,0,.8)]">I'll always be happy with a cupcake.</p></article>
+    <article class="promise snap-start shrink-0 w-[80vw] md:w-[30vw] h-[320px] md:h-[380px] p-8 border border-line overflow-hidden isolate relative flex flex-col justify-between hover:border-rose/60 transition-colors duration-500"><img src="images/12.jpg" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover object-[50%_40%] z-0"><span class="absolute inset-0 z-0 bg-gradient-to-t from-ink/90 via-ink/60 to-ink/45" aria-hidden="true"></span><span class="relative z-10 font-serif italic text-rose text-xl [text-shadow:0_2px_14px_rgba(0,0,0,.7)]">iv.</span><p class="relative z-10 font-serif text-3xl leading-tight text-cream [text-shadow:0_2px_18px_rgba(0,0,0,.8)]">Be goofy with me, I'll be more goofy than you.</p></article>
+    <article class="promise snap-start shrink-0 w-[80vw] md:w-[30vw] h-[320px] md:h-[380px] p-8 border border-rose/40 overflow-hidden isolate relative flex flex-col justify-between transition-colors duration-500"><img src="images/13.jpg" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover object-[50%_35%] z-0"><span class="absolute inset-0 z-0 bg-gradient-to-t from-wine/90 via-ink/60 to-ink/50" aria-hidden="true"></span><span class="relative z-10 font-serif italic text-rose text-xl [text-shadow:0_2px_14px_rgba(0,0,0,.7)]">v.</span><p class="relative z-10 font-serif text-3xl leading-tight text-cream [text-shadow:0_2px_18px_rgba(0,0,0,.8)]">Your eyes shine brighter than the stars amongst the sky</p></article>
+  </div>
+</section>
+
+<!-- FINALE -->
+<section id="finale" class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 py-32 overflow-hidden">
+  <span data-speed="-.2" class="stroke-text absolute font-serif font-semibold text-[55vw] md:text-[36rem] leading-none opacity-20 select-none" aria-hidden="true">15</span>
+  <div class="relative z-10 max-w-xl">
+    <div class="fin text-rose text-5xl mb-6 animate-beat motion-reduce:animate-none" aria-hidden="true">♥</div>
+    <h2 class="fin font-serif text-5xl md:text-7xl">Happy <em class="text-rose">fifteenth</em>, Cali.</h2>
+    <p class="fin mt-8 font-serif italic text-xl md:text-2xl text-muted leading-relaxed">Chapter sixteen is already waiting. I would walk into every one of them with you.</p>
+    <a id="back" href="../../index.html#archive" class="fin inline-block mt-14 px-8 py-4 bg-cream text-ink text-[12px] font-semibold tracking-[.18em] uppercase hover:bg-rose hover:shadow-[0_0_30px_rgba(232,175,183,.35)] transition duration-500">&larr; Return to Navigation</a>
+    <p class="fin mt-14 text-[10px] tracking-[.3em] uppercase text-muted/60">Mikhail × Cali — 15 / 24</p>
+  </div>
+</section>
+</main>
+
+<audio id="bgm" src="music.mp3" loop preload="none"></audio>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="script.js" defer></script>
 </body>
 </html>
