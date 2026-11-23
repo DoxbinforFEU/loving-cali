@@ -1,0 +1,187 @@
+/* =========================================================
+   16TH MONTHSARY — standalone styles (independent of 13th–15th)
+   ========================================================= */
+
+html { scroll-behavior: smooth; }
+::selection { background: #E7B8C2; color: #0A090E; }
+
+/* ---------- atmosphere: grain + vignette ---------- */
+#grain {
+  position: fixed; inset: 0; z-index: 150; pointer-events: none;
+  opacity: .04; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+#vignette {
+  position: fixed; inset: 0; z-index: 140; pointer-events: none;
+  box-shadow: inset 0 0 18vw 2vw rgba(10,9,14,.65);
+}
+
+/* ---------- starfield ---------- */
+#stars span { position: absolute; width: 2px; height: 2px; background: #F2ECE2; border-radius: 50%; }
+
+/* ---------- cursor dot ---------- */
+#cursorDot {
+  position: fixed; top: 0; left: 0; width: 10px; height: 10px; margin: -5px 0 0 -5px;
+  border-radius: 50%; background: #E7B8C2; pointer-events: none; z-index: 250;
+  opacity: 0; mix-blend-mode: difference; transition: opacity .3s ease, transform .2s ease;
+}
+#cursorDot.cursor--active { opacity: 1; }
+#cursorDot.cursor--grow { transform: scale(3.4); }
+
+/* ---------- hero / reveal helpers ---------- */
+.hero-char, .hero-in, .fin, .reveal, .reveal-mask { will-change: transform, opacity; }
+
+.reveal-mask { overflow: hidden; }
+.reveal-mask > * { display: block; }
+
+/* ---------- giant pull quote mark ---------- */
+.pull-mark {
+  position: absolute;
+  left: 4%; top: 6%;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(8rem, 20vw, 20rem);
+  line-height: 1;
+  color: #F2ECE2;
+  opacity: .04;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ---------- ghost numerals ---------- */
+.ghost-num {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: clamp(16rem, 48vw, 42rem);
+  line-height: 1;
+  color: #F2ECE2;
+  opacity: .025;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+.ghost-num--big { font-size: clamp(20rem, 58vw, 52rem); opacity: .022; }
+
+/* ---------- timeline panels ---------- */
+#tlTrack { will-change: transform; }
+.tl-panel img { transform: scale(1.02); }
+
+/* ---------- call cards ---------- */
+.call-card .zoom { border-radius: 10px; }
+.call-card .zoom::after {
+  content: "";
+  position: absolute;
+  top: 10px; left: 50%;
+  transform: translateX(-50%);
+  width: 34px; height: 4px;
+  border-radius: 999px;
+  background: rgba(242,236,226,.35);
+}
+
+/* ---------- appreciation rows ---------- */
+.appr-row { position: relative; }
+.appr-row:hover p { color: #F2ECE2; }
+.appr-row p { color: #B9A6AE; transition: color .3s ease; }
+
+/* ---------- nav music bars ---------- */
+#music i { display: block; width: 2px; height: 4px; background: currentColor; border-radius: 1px; }
+@keyframes bars { 0%, 100% { height: 4px; } 50% { height: 12px; } }
+
+/* ---------- lightbox ---------- */
+#lightbox.flex { display: flex; }
+
+/* =========================================================
+   PEONY BOUQUET
+   ========================================================= */
+.bouquet-flower { position: relative; transform-origin: bottom center; }
+
+.bouquet-stem-upper, .bouquet-stem-lower {
+  position: absolute;
+  left: 50%;
+  width: 3px;
+  background: linear-gradient(to bottom, #7c8c57, #3e4a28);
+  transform-origin: top center;
+}
+
+.bouquet-leaf {
+  position: absolute;
+  width: 24px; height: 13px;
+  background: linear-gradient(135deg, #7c8c57, #44512f);
+  border-radius: 0 100% 0 100%;
+  opacity: .9;
+}
+
+.peony-head { position: relative; }
+
+.peony-center {
+  position: absolute;
+  inset: 40%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #F6E2A8, #CDA857 70%);
+  z-index: 6;
+  box-shadow: 0 0 10px rgba(205,168,87,.5);
+}
+
+.petal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%;
+}
+
+.petal--outer { width: 40%; height: 62%; z-index: 1; }
+.petal--inner { width: 29%; height: 45%; z-index: 3; background: linear-gradient(to top, #E7B8C2, #F6E2E6 85%); }
+
+.ribbon { position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); width: 100px; height: 50px; z-index: 20; pointer-events: none; }
+.ribbon::before, .ribbon::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  width: 46px; height: 36px;
+  background: linear-gradient(135deg, #B9657C, #7A2D45);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+.ribbon::before { left: 0; }
+.ribbon::after { right: 0; transform: scaleX(-1); }
+.ribbon-knot {
+  position: absolute; top: 12px; left: 50%; width: 22px; height: 22px; transform: translateX(-50%);
+  background: radial-gradient(circle at 35% 30%, #E7B8C2, #7A2D45);
+  border-radius: 50%; z-index: 21;
+}
+
+@keyframes sway { 0%, 100% { transform: rotate(var(--rot, 0deg)) rotate(-2deg); } 50% { transform: rotate(var(--rot, 0deg)) rotate(2deg); } }
+.bouquet-sway { animation: sway 5.5s ease-in-out infinite; }
+
+@keyframes drift-down {
+  from { transform: translateY(-10%) rotate(0deg); opacity: 0; }
+  10% { opacity: .9; }
+  to { transform: translateY(110vh) rotate(260deg); opacity: 0; }
+}
+.falling-petal {
+  position: absolute; top: 0;
+  border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%;
+  background: linear-gradient(to top, #B9657C, #F6E2E6);
+  opacity: .75;
+  animation-name: drift-down;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .bouquet-sway { animation: none; }
+  .falling-petal { display: none; }
+  #grain, #vignette { display: none; }
+}
+/* ---------- hero numerals: the photos live inside the 16 ---------- */
+.hero-char { color: transparent; -webkit-background-clip: text; background-clip: text; background-size: cover;
+  -webkit-text-stroke: 1px rgba(242,236,226,.38); padding: 0 .015em; }
+.num-1 { background-image: linear-gradient(rgba(10,9,14,.1), rgba(10,9,14,.1)), url("images/10.jpg"); background-position: 50% 52%; }
+.num-6 { background-image: linear-gradient(rgba(10,9,14,.05), rgba(10,9,14,.05)), url("images/01.jpg"); background-position: 50% 36%; }
+
+/* words that light up as you read */
+.sw { display: inline-block; margin-right: .26em; }
+#cakeImg { will-change: clip-path, transform; }
+@media (prefers-reduced-motion: reduce) { #prog { display: none; } }
